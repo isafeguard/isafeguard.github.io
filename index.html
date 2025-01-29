@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...ver 1.0</title>
+    <title>Redirecting...ver 1.1</title>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -14,14 +14,14 @@
                 setTimeout(() => {
                     // If the app is not installed, redirect to Google Play Store
                     window.location.href = "https://play.google.com/store/apps/details?id=com.safeguard.safety";
-                }, 1500);
+                }, 3000);
             } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
                 // iOS - Try to open the app via custom scheme
                 window.location.href = "safeguard://";
                 setTimeout(() => {
                     // If the app is not installed, redirect to the App Store
                     window.location.href = "https://apps.apple.com/us/app/safeguard-ai/id1494633788";
-                }, 1500);
+                }, 3000);
             } else {
                 // Fallback for other devices
                 window.location.href = "https://safeguard.co.il/";
@@ -30,6 +30,6 @@
     </script>
 </head>
 <body>
-    <p>Redirecting... ver 1.0</p>
+    <p>Redirecting...ver 1.1</p>
 </body>
 </html>
