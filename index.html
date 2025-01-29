@@ -7,22 +7,37 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            let appOpened = false; // Flag to check if the app was opened
 
             if (/android/i.test(userAgent)) {
+                console.log("Trying to open Android app...");
                 // Android - Try to open the app via intent
-               window.location.replace("intent://projects/#Intent;scheme=safeguard;package=com.safeguard.safety;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.safeguard.safety;end;");
+                window.location.replace("intent://projects/#Intent;scheme=safeguard;package=com.safeguard.safety;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.safeguard.safety;end;");
+                
                 setTimeout(() => {
-                    // If the app is not installed, redirect to Google Play Store
-                    window.location.href = "https://play.google.com/store/apps/details?id=com.safeguard.safety";
+                    if (!appOpened) {
+                        console.log("App not detected. Redirecting to Google Play Store...");
+                        window.location.href = "https://play.google.com/store/apps/details?id=com.safeguard.safety";
+                    }
                 }, 1500);
             } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                console.log("Trying to open iOS app...");
                 // iOS - Try to open the app via custom scheme
-                window.location.href = "safeguard://";
+                const startTime = Date.now();
+                window.location.href = "safeguard://projects";
+
+                // Delay checking to give the app a chance to open
                 setTimeout(() => {
-                    // If the app is not installed, redirect to the App Store
-                    window.location.href = "https://apps.apple.com/us/app/safeguard-ai/id1494633788";
-                }, 1500);
+                    const elapsedTime = Date.now() - startTime;
+                    if (elapsedTime < 1500) {
+                        console.log("App did not open. Redirecting to App Store...");
+                        window.location.href = "https://apps.apple.com/us/app/safeguard-ai/id1494633788";
+                    } else {
+                        console.log("App opened successfully.");
+                    }
+                }, 1000);
             } else {
+                console.log("Non-mobile device detected. Redirecting to website...");
                 // Fallback for other devices
                 window.location.href = "https://safeguard.co.il/";
             }
@@ -30,6 +45,6 @@
     </script>
 </head>
 <body>
-    <p>Redirecting...ver 1.2</p>
+    <p>Redirecting... ver 1.3</p>
 </body>
 </html>
