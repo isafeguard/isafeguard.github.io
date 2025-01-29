@@ -17,35 +17,36 @@
                 setTimeout(() => {
                     if (!appOpened) {
                         console.log("App not detected. Redirecting to Google Play Store...");
-                        window.location.replace("https://play.google.com/store/apps/details?id=com.safeguard.safety");
+                        window.location.href = "https://play.google.com/store/apps/details?id=com.safeguard.safety";
                     }
                 }, 1500);
             } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
                 console.log("Trying to open iOS app...");
-                const startTime = Date.now();
 
-                // Use replace() instead of href to minimize history entry
-                window.location.replace("safeguard://projects");
+                const startTime = Date.now();
+                
+                // Try to open the app
+                window.location.href = "safeguard://projects";
 
                 // Set a fallback to the App Store if the app does not open
                 setTimeout(() => {
                     const elapsedTime = Date.now() - startTime;
                     if (elapsedTime < 2000) {
                         console.log("App did not open. Redirecting to App Store...");
-                        window.location.replace("https://apps.apple.com/us/app/safeguard-ai/id1494633788");
+                        window.location.href = "https://apps.apple.com/us/app/safeguard-ai/id1494633788";
                     } else {
                         console.log("App opened successfully.");
                     }
-                }, 5000);
+                }, 1500);
             } else {
                 console.log("Non-mobile device detected. Redirecting to website...");
                 // Fallback for other devices
-                window.location.replace("https://safeguard.co.il/");
+                window.location.href = "https://safeguard.co.il/";
             }
         });
     </script>
 </head>
 <body>
-    <p>Redirecting... ver 1.6</p>
+    <p>Redirecting... ver 1.5</p>
 </body>
 </html>
