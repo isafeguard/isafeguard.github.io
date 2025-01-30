@@ -21,22 +21,15 @@
                     }
                 }, 1500);
             } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                console.log("Trying to open iOS app...");
-                const startTime = Date.now();
                 
                 // Try to open the app
-                window.location.href = "safeguard://projects";
+                window.location.replace("safeguard://projects");
 
                 // Set a fallback to the App Store if the app does not open
                 setTimeout(() => {
-                    const elapsedTime = Date.now() - startTime;
-                    if (elapsedTime < 2000) {
                         console.log("App did not open. Redirecting to App Store...");
                         window.location.href = "https://apps.apple.com/us/app/safeguard-ai/id1494633788";
-                    } else {
-                        console.log("App opened successfully.");
-                    }
-                }, 1500);
+                }, 10000);
             } else {
                 console.log("Non-mobile device detected. Redirecting to website...");
                 window.location.replace("https://safeguard.co.il/");
@@ -45,6 +38,6 @@
     </script>
 </head>
 <body>
-    <p>Redirecting... ver 1.5</p>
+    <p>Redirecting... ver 2.0</p>
 </body>
 </html>
