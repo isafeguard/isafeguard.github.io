@@ -7,7 +7,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            let appOpened = false; // Flag to track if the app was opened
+            let appOpened = false; // Track if the app is opened
 
             if (/android/i.test(userAgent)) {
                 console.log("Trying to open Android app...");
@@ -22,24 +22,22 @@
             } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
                 console.log("Trying to open iOS app...");
 
+                // Record the time before opening the app
                 const startTime = Date.now();
-                let timeout;
 
-                // Detect if user leaves the page (meaning the app was likely opened)
-                const onBlur = () => {
-                    appOpened = true;
-                    console.log("App opened successfully, canceling App Store redirect.");
-                    clearTimeout(timeout);
-                };
-
-                window.addEventListener("blur", onBlur); // Listen for when the user leaves the page
+                // Try to open the app
                 window.location.replace("safeguard://projects");
 
-                // Set a fallback to the App Store if the app does not open
-                timeout = setTimeout(() => {
-                    if (!appOpened) {
+                // Set a timeout to detect if the app opened
+                setTimeout(() => {
+                    const elapsedTime = Date.now() - startTime;
+
+                    // If the user is still on the page after 2 seconds, they don't have the app installed
+                    if (elapsedTime < 2000) {
                         console.log("App did not open. Redirecting to App Store...");
                         window.location.replace("https://apps.apple.com/us/app/safeguard-ai/id1494633788");
+                    } else {
+                        console.log("App opened successfully.");
                     }
                 }, 2000);
             } else {
@@ -50,6 +48,6 @@
     </script>
 </head>
 <body>
-    <p>Redirecting... ver 1.8</p>
+    <p>Redirecting... ver 1.9</p>
 </body>
 </html>
