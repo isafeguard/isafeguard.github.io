@@ -7,46 +7,44 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            let appOpened = false; // Flag to check if the app was opened
+            let appOpened = false;
 
             if (/android/i.test(userAgent)) {
                 console.log("Trying to open Android app...");
-                // Android - Try to open the app via intent
                 window.location.replace("intent://projects/#Intent;scheme=safeguard;package=com.safeguard.safety;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.safeguard.safety;end;");
                 
                 setTimeout(() => {
                     if (!appOpened) {
                         console.log("App not detected. Redirecting to Google Play Store...");
-                        window.location.href = "https://play.google.com/store/apps/details?id=com.safeguard.safety";
+                        window.location.replace("https://play.google.com/store/apps/details?id=com.safeguard.safety");
                     }
                 }, 1500);
             } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
                 console.log("Trying to open iOS app...");
-
                 const startTime = Date.now();
                 
-                // Try to open the app
-                window.location.href = "safeguard://projects";
+                setTimeout(() => {
+                    window.location.replace("safeguard://projects");
+                }, 100); // Small delay before attempting
 
                 // Set a fallback to the App Store if the app does not open
                 setTimeout(() => {
                     const elapsedTime = Date.now() - startTime;
                     if (elapsedTime < 2000) {
                         console.log("App did not open. Redirecting to App Store...");
-                        window.location.href = "https://apps.apple.com/us/app/safeguard-ai/id1494633788";
+                        window.location.replace("https://apps.apple.com/us/app/safeguard-ai/id1494633788");
                     } else {
                         console.log("App opened successfully.");
                     }
                 }, 1500);
             } else {
                 console.log("Non-mobile device detected. Redirecting to website...");
-                // Fallback for other devices
-                window.location.href = "https://safeguard.co.il/";
+                window.location.replace("https://safeguard.co.il/");
             }
         });
     </script>
 </head>
 <body>
-    <p>Redirecting... ver 1.5</p>
+    <p>Redirecting... ver 1.7</p>
 </body>
 </html>
