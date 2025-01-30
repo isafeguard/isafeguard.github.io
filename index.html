@@ -7,10 +7,11 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            let appOpened = false; // Track if the app is opened
+            let appOpened = false; // Flag to track if the app was opened
 
             if (/android/i.test(userAgent)) {
                 console.log("Trying to open Android app...");
+                // Android - Try to open the app via intent
                 window.location.replace("intent://projects/#Intent;scheme=safeguard;package=com.safeguard.safety;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.safeguard.safety;end;");
                 
                 setTimeout(() => {
@@ -21,25 +22,21 @@
                 }, 1500);
             } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
                 console.log("Trying to open iOS app...");
-
-                // Record the time before opening the app
                 const startTime = Date.now();
-
+                
                 // Try to open the app
-                window.location.replace("safeguard://projects");
+                window.location.href = "safeguard://projects";
 
-                // Set a timeout to detect if the app opened
+                // Set a fallback to the App Store if the app does not open
                 setTimeout(() => {
                     const elapsedTime = Date.now() - startTime;
-
-                    // If the user is still on the page after 2 seconds, they don't have the app installed
                     if (elapsedTime < 2000) {
                         console.log("App did not open. Redirecting to App Store...");
-                        window.location.replace("https://apps.apple.com/us/app/safeguard-ai/id1494633788");
+                        window.location.href = "https://apps.apple.com/us/app/safeguard-ai/id1494633788";
                     } else {
                         console.log("App opened successfully.");
                     }
-                }, 2000);
+                }, 1500);
             } else {
                 console.log("Non-mobile device detected. Redirecting to website...");
                 window.location.replace("https://safeguard.co.il/");
@@ -48,6 +45,6 @@
     </script>
 </head>
 <body>
-    <p>Redirecting... ver 1.9</p>
+    <p>Redirecting... ver 1.5</p>
 </body>
 </html>
